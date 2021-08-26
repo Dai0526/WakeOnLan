@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WakeOnLan"
         mc:Ignorable="d"
         Closing="Window_Closing"
+        ResizeMode="NoResize"
         Title="WakeOnLan" Height="400" Width="500" FontSize="13" FontFamily="Consolas">
     <Grid>
         <Grid Name="MainGrid">
@@ -27,21 +28,29 @@
                     <ColumnDefinition Width="30*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Name="ListGrid" Grid.Column="0" Margin="0,0,0,0">
-                    <DataGrid x:Name="ConfigDataGrid" AutoGenerateColumns="False" Margin="2,2,2,27" IsReadOnly="True" SelectionMode="Extended" AlternatingRowBackground="LightGray" FontSize="10">
+                    <DataGrid x:Name="ConfigDataGrid" SelectionChanged="ConfigDataGrid_SelectionChanged" ItemsSource="{Binding Records, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" Margin="2,2,2,27" IsReadOnly="True" FontSize="10">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="ONLINE_COLOR" Color="LightCyan" />
+                            <SolidColorBrush x:Key="DEFAULT_COLOR" Color="White" />
+                            <SolidColorBrush x:Key="OFFLINE_COLOR" Color="LightPink" />
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Status" Width="25*" IsReadOnly="True" Binding="{Binding status}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
                                         <Style.Triggers>
-                                            <Trigger Property="Text" Value="John">
-                                                <Setter Property="Background" Value="LightGreen"/>
-                                            </Trigger>
-                                            <Trigger Property="Text" Value="John">
-                                                <Setter Property="Background" Value="LightGreen"/>
-                                            </Trigger>
+                                            <DataTrigger Binding="{Binding status}" Value="2">
+                                                <Setter Property="Background" Value="{StaticResource ONLINE_COLOR}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding status}" Value="1">
+                                                <Setter Property="Background" Value="{StaticResource OFFLINE_COLOR}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding status}" Value="0">
+                                                <Setter Property="Background" Value="{StaticResource DEFAULT_COLOR}"/>
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn.CellStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="Name" Width="50*" IsReadOnly="True" Binding="{Binding id}"/>
                             <DataGridTextColumn Header="Description" Width="110*" Binding="{Binding description}"/>

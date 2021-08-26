@@ -7,7 +7,7 @@ namespace WakeOnLan
 {
     public enum PCStatus
     {
-        UNKNOWN = 0,
+        UNKNOW = 0,
         ONLINE = 1,
         OFFLINE = 2
     }
@@ -18,7 +18,7 @@ namespace WakeOnLan
         public PhysicalAddress macAddress { get; set; } = null;
         public string id { get; set; } = null;
         public string description { get; set; } = null;
-        public PCStatus status { get; set; } = PCStatus.UNKNOWN;
+        public PCStatus status { get; set; } = PCStatus.UNKNOW;
         public DateTime lastChecked { get; set; }
 
         public ComputerInfo(string ip, string mac, string name, string desc = "")

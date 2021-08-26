@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WakeOnLan.Utility;
+using WakeOnLan.ViewModel;
 
 namespace WakeOnLan
 {
@@ -20,14 +23,40 @@ namespace WakeOnLan
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private readonly SolidColorBrush COLOR_OFFLINE = new SolidColorBrush(Colors.Red);
+        private readonly SolidColorBrush COLOR_DEFAULT = new SolidColorBrush(Colors.White);
+        private readonly SolidColorBrush COLOR_ONLINE = new SolidColorBrush(Colors.Green);
+
+        static MainWindowViewModel mainWindowViewModel = new MainWindowViewModel();
+        static WakeOnLanCore m_wake = Singleton<WakeOnLanCore>.Instance;
+        static Configuration m_config = Singleton<Configuration>.Instance;
+
+        private string m_configPath = @".\WoL.xml";
+
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = mainWindowViewModel;
+            LoadConfig(m_configPath);
+        }
+
+
+        private void LoadConfig(string path)
+        {
+            m_configPath = path;
+            m_config.ReadConfigXml(m_configPath);
+            mainWindowViewModel.Records = new ObservableCollection<ComputerInfo>(m_config.m_pcInfo.Values);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
+        }
+
+        private void ConfigDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //mainWindowViewModel.SelectedPCInfo = ConfigDataGrid.SelectedItem;
         }
     }
 }
