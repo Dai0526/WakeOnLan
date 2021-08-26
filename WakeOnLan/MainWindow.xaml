@@ -12,12 +12,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="70*"/>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
             <DockPanel Name="MenuPanel" Grid.Row="0" VerticalAlignment="Stretch" Height="20" Margin="0,0,0,0">
                 <Menu DockPanel.Dock="Top" FontSize="9" VerticalAlignment="Stretch">
                     <MenuItem Header="_Load" VerticalAlignment="Stretch" Height="20"/>
+                    <MenuItem Header="_Save" VerticalAlignment="Stretch" Height="20"/>
                 </Menu>
             </DockPanel>
 
@@ -27,30 +27,39 @@
                     <ColumnDefinition Width="30*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Name="ListGrid" Grid.Column="0" Margin="0,0,0,0">
-                    <DataGrid x:Name="ConfigDataGrid" AutoGenerateColumns="False" Margin="2,2,2,25" IsReadOnly="True" AlternatingRowBackground="LightGray" FontSize="10">
+                    <DataGrid x:Name="ConfigDataGrid" AutoGenerateColumns="False" Margin="2,2,2,27" IsReadOnly="True" SelectionMode="Extended" AlternatingRowBackground="LightGray" FontSize="10">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Status" Width="25*" IsReadOnly="True" Binding="{Binding DateAdded}"/>
-                            <DataGridTextColumn Header="Name" Width="50*" IsReadOnly="True" Binding="{Binding ItemOrigin}"/>
-                            <DataGridTextColumn Header="Description" Width="110*" Binding="{Binding Grouping}"/>
+                            <DataGridTextColumn Header="Status" Width="25*" IsReadOnly="True" Binding="{Binding status}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="John">
+                                                <Setter Property="Background" Value="LightGreen"/>
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="John">
+                                                <Setter Property="Background" Value="LightGreen"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Name" Width="50*" IsReadOnly="True" Binding="{Binding id}"/>
+                            <DataGridTextColumn Header="Description" Width="110*" Binding="{Binding description}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="button4" Content="Add" HorizontalAlignment="Left" Margin="10,249,0,0" VerticalAlignment="Top" Width="52"/>
-                    <Button x:Name="button5" Content="Delete" HorizontalAlignment="Left" Margin="72,249,0,0" VerticalAlignment="Top" Width="56"/>
+                    <Button x:Name="button" Content="Check All" HorizontalAlignment="Left" Margin="180,281,0,0" VerticalAlignment="Top" Width="73"/>
+                    <Button x:Name="button1" Content="Wake All" HorizontalAlignment="Left" Margin="259,281,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="button4" Content="Add" HorizontalAlignment="Left" Margin="16,281,0,0" VerticalAlignment="Top" Width="52"/>
+                    <Button x:Name="button5" Content="Delete" HorizontalAlignment="Left" Margin="79,281,0,0" VerticalAlignment="Top" Width="56"/>
                 </Grid>
                 <Grid Name="DetailGrid" Grid.Column="1" Margin="0,0,0,0">
-                    <Button x:Name="button3" Content="Check" HorizontalAlignment="Left" Margin="78,248,0,0" VerticalAlignment="Top" Width="51"/>
-                    <Button x:Name="button2" Content="Wake" HorizontalAlignment="Left" Margin="10,248,0,0" VerticalAlignment="Top" Width="51"/>
+                    <Button x:Name="button3" Content="Check" HorizontalAlignment="Left" Margin="78,280,0,0" VerticalAlignment="Top" Width="51"/>
+                    <Button x:Name="button2" Content="Wake" HorizontalAlignment="Left" Margin="10,280,0,0" VerticalAlignment="Top" Width="51"/>
+
                 </Grid>
             </Grid>
 
-            <Grid Name="OperationGrid" Grid.Row="2" Margin="0,0,0,0">
-                <Button x:Name="button" Content="Check All" HorizontalAlignment="Left" Margin="171,-22,0,0" VerticalAlignment="Top" Width="73"/>
-                <Button x:Name="button1" Content="Wake All" HorizontalAlignment="Left" Margin="257,-22,0,0" VerticalAlignment="Top" Width="75"/>
-                
-
-            </Grid>
-
-            <Grid Name="StatusGrid" Grid.Row="3" Margin="0,0,0,0">
+            <Grid Name="StatusGrid" Grid.Row="2" Margin="0,0,0,0">
 
             </Grid>
         </Grid>
