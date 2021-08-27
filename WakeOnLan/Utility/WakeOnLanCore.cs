@@ -13,7 +13,7 @@ namespace WakeOnLan.Utility
     {
 
         private const UInt16 Port = 9;
-        private UdpClient m_client;
+        private UdpClient m_client = null;
 
         public WakeOnLanCore()
         {
@@ -22,12 +22,17 @@ namespace WakeOnLan.Utility
 
         public void Wake(string mac, string ip = "")
         {
-
+            // TODO
         }
 
         public void Wake(PhysicalAddress mac, IPAddress ip = null)
         {
+            // TODO
+        }
 
+        public void Wake(ComputerInfo info)
+        {
+            // TODO
         }
 
         public bool Ping(string ip)
@@ -37,7 +42,7 @@ namespace WakeOnLan.Utility
 
 
         /*
-         TODO
+         TODO - extra
          1. Launch a thread to check PC status by ping in 2 mins (slow start methods) 
          */
     }

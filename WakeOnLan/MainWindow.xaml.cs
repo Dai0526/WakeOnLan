@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,22 +42,29 @@ namespace WakeOnLan
             LoadConfig(m_configPath);
         }
 
-
         private void LoadConfig(string path)
         {
             m_configPath = path;
             m_config.ReadConfigXml(m_configPath);
-            mainWindowViewModel.Records = new ObservableCollection<ComputerInfo>(m_config.m_pcInfo.Values);
+            mainWindowViewModel.PCInfoMap = m_config.m_pcInfo;
         }
+
+        private void ConfigDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ConfigDataGrid.SelectedItem == null)
+            {
+                return;
+            }
+
+            string selectedId = ((ComputerInfo)ConfigDataGrid.SelectedItem).id;
+            mainWindowViewModel.SetSelectedPC(selectedId);
+        }
+
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
         }
 
-        private void ConfigDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //mainWindowViewModel.SelectedPCInfo = ConfigDataGrid.SelectedItem;
-        }
     }
 }

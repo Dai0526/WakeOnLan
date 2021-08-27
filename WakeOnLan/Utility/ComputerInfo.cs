@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 
@@ -27,6 +28,32 @@ namespace WakeOnLan
             macAddress = ParseMacAddress(mac.ToUpper().Replace(':', '-'));
             description = desc;
             id = name;
+        }
+
+        public string GetIPString()
+        {
+            return IP.ToString();
+        }
+
+        public string GetMACString()
+        {
+            return string.Join("-", macAddress.GetAddressBytes().Select(b => b.ToString("X2")));
+        }
+
+        public string GetLastCheckString()
+        {
+            DateTime init = new DateTime();
+            if(init.CompareTo(lastChecked) == 0 || lastChecked == null)
+            {
+                return "NA";
+            }
+
+            return lastChecked.ToString();
+        }
+
+        public string GetStatusString()
+        {
+            return status.ToString();
         }
 
         private IPAddress ParseIp(string ip)
