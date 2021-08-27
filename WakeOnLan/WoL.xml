@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Computers>
+    <Node id = "tianhua" ip = "192.168.68.141" mac = "24-6E-96-24-66-44" description = ""/>
+    <Node id = "zhanyu"  ip = "192.168.68.111" mac = "14-FE-B5-F0-8E-22" description = ""/>
+</Computers>
