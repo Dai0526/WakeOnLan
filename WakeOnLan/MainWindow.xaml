@@ -64,10 +64,10 @@
                         </DataGrid>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <Button x:Name="CheckAllButton" Content="Check All" HorizontalAlignment="Left" Margin="241,2,0,0" VerticalAlignment="Top" Width="102" FontSize="18"/>
-                        <Button x:Name="WakeAllButton" Content="Wake All" HorizontalAlignment="Left" Margin="362,2,0,0" VerticalAlignment="Top" Width="104" FontSize="18"/>
-                        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Width="69" FontSize="18"/>
-                        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="98,2,0,0" VerticalAlignment="Top" Width="89" FontSize="18"/>
+                        <Button x:Name="CheckAllButton" Content="Check All" HorizontalAlignment="Left" Margin="241,10,0,0" VerticalAlignment="Top" Width="102" FontSize="18"/>
+                        <Button x:Name="WakeAllButton" Content="Wake All" HorizontalAlignment="Left" Margin="362,9,0,0" VerticalAlignment="Top" Width="104" FontSize="18"/>
+                        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="69" FontSize="18"/>
+                        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="97,10,0,0" VerticalAlignment="Top" Width="89" FontSize="18"/>
                     </Grid>
                 </Grid>
                 <Grid Name="DetailGrid" Grid.Column="1" Margin="0,0,0,0">
@@ -92,13 +92,13 @@
                         <TextBox x:Name="SelectedLastCheckTB" Text="{Binding Path=SelectedlastChecked, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="139,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" FontSize="16"/>
 
                         <Label x:Name="SelectedDescriptionLabel" Content="Description" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="0,180,0,0" VerticalAlignment="Top" FontSize="16" Width="116"/>
-                        <TextBox x:Name="SelectedDescriptionTB" HorizontalAlignment="Left" Height="206" Margin="10,214,0,0" TextWrapping="Wrap" Text="{Binding Path=SelectedDescription, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="294"/>
+                        <TextBox x:Name="SelectedDescriptionTB" HorizontalAlignment="Left" Height="216" Margin="10,214,0,0" TextWrapping="Wrap" Text="{Binding Path=SelectedDescription, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="294"/>
 
                     </Grid>
 
                     <Grid Name="SelectedItemOperationGrid"  Grid.Row="1">
-                        <Button x:Name="CheckButton" Content="Check" HorizontalAlignment="Left" Margin="168,0,0,0" VerticalAlignment="Top" Width="65" FontSize="18"/>
-                        <Button x:Name="WakeButton" Content="Wake" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Top" Width="72" FontSize="18"/>
+                        <Button x:Name="CheckButton" Content="Check" HorizontalAlignment="Left" Margin="168,10,0,0" VerticalAlignment="Top" Width="65" FontSize="18"/>
+                        <Button x:Name="WakeButton" Content="Wake" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top" Width="72" FontSize="18"/>
                     </Grid>
                 </Grid>
             </Grid>
