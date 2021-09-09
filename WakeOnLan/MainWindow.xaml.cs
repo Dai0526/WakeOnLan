@@ -60,11 +60,88 @@ namespace WakeOnLan
             mainWindowViewModel.SetSelectedPC(selectedId);
         }
 
+        private void savePCInfo()
+        {
+            ComputerInfo info = mainWindowViewModel.SelectedPCInfo;
+
+        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
         }
 
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(ConfigDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Warning: Please Select an Item to Delete", "Warning", MessageBoxButton.OK);
+                return;
+            }
+
+            MessageBoxResult res = MessageBox.Show("Delete action cannot be reverted, continue delete? ", "Warning", MessageBoxButton.YesNo);
+            if(res == MessageBoxResult.Yes)
+            {
+                string targetId = ((ComputerInfo)ConfigDataGrid.SelectedItem).id;
+                bool isRemoved = mainWindowViewModel.PCInfoMap.Remove(targetId);
+
+                if(string.Compare(targetId, mainWindowViewModel.SelectedPCInfo.id) == 0){
+                    mainWindowViewModel.SelectedPCInfo = null;
+                }
+
+                UpdateGUI();
+            }
+
+        }
+
+        private void CheckAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(var pc in mainWindowViewModel.PCInfoMap)
+            {
+                Task.Run(() => CheckSinglePC(pc.Value));
+            }
+        }
+
+        private void WakeAllButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void WakeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckButton_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() => CheckSinglePC(mainWindowViewModel.SelectedPCInfo));
+        }
+
+        private void CheckSinglePC(ComputerInfo info) 
+        {
+            bool isOnline = m_wake.PingTarget(info);
+            if (isOnline)
+            {
+                info.status = PCStatus.ONLINE;
+            }
+            else
+            {
+                info.status = PCStatus.OFFLINE;
+            }
+
+            info.UpdateLastCheck();
+            UpdateGUI();
+        }
+
+        private void UpdateGUI()
+        {
+            mainWindowViewModel.UpdateSelectPCDisplay();
+            mainWindowViewModel.PCInfoMap = m_config.m_pcInfo;
+        }
     }
 }

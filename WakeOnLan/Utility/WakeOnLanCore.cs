@@ -35,10 +35,30 @@ namespace WakeOnLan.Utility
             // TODO
         }
 
-        public bool Ping(string ip)
+        public bool PingTarget(ComputerInfo info)
         {
-            return true;
+            return PingTarget(info.IP);
         }
+
+        public bool PingTarget(IPAddress ip)
+        {
+            return PingTarget(ip.ToString());
+        }
+
+        public bool PingTarget(string ip)
+        {
+            try
+            {
+                Ping pg = new Ping();
+                PingReply rp = pg.Send(ip);
+                return rp.Status == IPStatus.Success;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
 
         /*

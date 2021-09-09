@@ -40,9 +40,15 @@ namespace WakeOnLan
             return string.Join("-", macAddress.GetAddressBytes().Select(b => b.ToString("X2")));
         }
 
+        public void UpdateLastCheck()
+        {
+            lastChecked = DateTime.Now;
+        }
+
         public string GetLastCheckString()
         {
             DateTime init = new DateTime();
+            init = DateTime.Now;
             if(init.CompareTo(lastChecked) == 0 || lastChecked == null)
             {
                 return "NA";

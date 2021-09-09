@@ -62,6 +62,7 @@ namespace WakeOnLan.ViewModel
             {
                 selectedPC = value;
                 OnPropertyChanged(nameof(SelectedPCInfo));
+                UpdateSelectPCDisplay();
             }
         }
 
@@ -73,7 +74,16 @@ namespace WakeOnLan.ViewModel
             if(temp != null)
             {
                 SelectedPCInfo = PCInfoMap[id];
+            }else
+            {
+                SelectedPCInfo = null;
+            }
+        }
 
+        public void UpdateSelectPCDisplay()
+        {
+            if(SelectedPCInfo != null)
+            {
                 SelectedId = SelectedPCInfo.id;
                 SelectedIP = SelectedPCInfo.GetIPString();
                 SelectedMac = SelectedPCInfo.GetMACString();
@@ -82,13 +92,11 @@ namespace WakeOnLan.ViewModel
                 SelectedDescription = SelectedPCInfo.description;
             }else
             {
-                SelectedPCInfo = null;
-
                 SelectedId = "NA";
                 SelectedIP = "NA";
                 SelectedMac = "NA";
-                SelectedStatus = "NA";
-                SelectedlastChecked = PCStatus.UNKNOW.ToString();
+                SelectedStatus = PCStatus.UNKNOW.ToString();
+                SelectedlastChecked = "NA";
                 SelectedDescription = string.Empty;
             }
         }
@@ -126,7 +134,7 @@ namespace WakeOnLan.ViewModel
             }
         }
 
-        private string selectedStatus = "NA";
+        private string selectedStatus = "UNKNOW";
         public string SelectedStatus
         {
             get { return selectedStatus; }
