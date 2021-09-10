@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WakeOnLan.Utility;
 using WakeOnLan.ViewModel;
 
@@ -55,16 +46,15 @@ namespace WakeOnLan
             {
                 return;
             }
-
+            // save current changes then load new item
+            mainWindowViewModel.UpdatePCInfoMap();
             string selectedId = ((ComputerInfo)ConfigDataGrid.SelectedItem).id;
             mainWindowViewModel.SetSelectedPC(selectedId);
+
+            UpdateGUI();
         }
 
-        private void savePCInfo()
-        {
-            ComputerInfo info = mainWindowViewModel.SelectedPCInfo;
 
-        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -107,6 +97,11 @@ namespace WakeOnLan
             }
         }
 
+        private void CheckButton_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() => CheckSinglePC(mainWindowViewModel.SelectedPCInfo));
+        }
+
         private void WakeAllButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -117,10 +112,11 @@ namespace WakeOnLan
 
         }
 
-        private void CheckButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Task.Run(() => CheckSinglePC(mainWindowViewModel.SelectedPCInfo));
+            SavePCInfo();
         }
+
 
         private void CheckSinglePC(ComputerInfo info) 
         {
@@ -138,10 +134,51 @@ namespace WakeOnLan
             UpdateGUI();
         }
 
+
+        private void MenuItem_Load(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Title = "Please select Configuration XML file.";
+            ofd.InitialDirectory = @Directory.GetCurrentDirectory();
+            ofd.CheckFileExists = true;
+            ofd.CheckPathExists = true;
+
+            if (ofd.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            {
+                return;
+            }
+
+            m_configPath = ofd.FileName;
+            LoadConfig(m_configPath);
+            UpdateGUI();
+        }
+
+        private void MenuItem_Save(object sender, RoutedEventArgs e)
+        {
+            SavePCInfo();
+        }
+
+        private void SavePCInfo()
+        {
+            try
+            {
+                mainWindowViewModel.UpdatePCInfoMap();
+                m_config.m_pcInfo = mainWindowViewModel.PCInfoMap;
+                m_config.WriteConfigXml(m_configPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Failed to Save xml File " + ex.Data, "Error", MessageBoxButton.OK);
+            }
+
+            MessageBox.Show("Success!", "Success", MessageBoxButton.OK);
+        }
+
         private void UpdateGUI()
         {
             mainWindowViewModel.UpdateSelectPCDisplay();
             mainWindowViewModel.PCInfoMap = m_config.m_pcInfo;
         }
+
     }
 }

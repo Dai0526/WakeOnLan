@@ -53,13 +53,29 @@ namespace WakeOnLan
             return true;
     }
 
-        public void WriteConfigXml(string path)
+        public bool WriteConfigXml(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
                 //throw Exception("Configuration Path is null or empty.");
-                return;
+                return false;
             }
+
+            if(m_pcInfo == null || m_pcInfo.Count == 0)
+            {
+                return true;
+            }
+
+            XDocument doc = new XDocument();
+            XElement root = new XElement("Computers",
+                                m_pcInfo.Values.Select(x => new XElement("Node", new XAttribute[] {
+                                    new XAttribute("id", x.id),
+                                    new XAttribute("ip", x.GetIPString()),
+                                    new XAttribute("mac", x.GetMACString()),
+                                    new XAttribute("description", x.description) } )));
+            doc.Add(root);
+            doc.Save(@path);
+            return true;
         }
 
     }

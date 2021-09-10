@@ -20,7 +20,7 @@ namespace WakeOnLan
         public string id { get; set; } = null;
         public string description { get; set; } = null;
         public PCStatus status { get; set; } = PCStatus.UNKNOW;
-        public DateTime lastChecked { get; set; }
+        public DateTime lastChecked { get; set; } = DateTime.MinValue;
 
         public ComputerInfo(string ip, string mac, string name, string desc = "")
         {
@@ -47,9 +47,7 @@ namespace WakeOnLan
 
         public string GetLastCheckString()
         {
-            DateTime init = new DateTime();
-            init = DateTime.Now;
-            if(init.CompareTo(lastChecked) == 0 || lastChecked == null)
+            if(lastChecked.CompareTo(DateTime.MinValue) == 0 || lastChecked == null)
             {
                 return "NA";
             }
@@ -62,7 +60,7 @@ namespace WakeOnLan
             return status.ToString();
         }
 
-        private IPAddress ParseIp(string ip)
+        public IPAddress ParseIp(string ip)
         {
             IPAddress address = null;
 
@@ -73,20 +71,23 @@ namespace WakeOnLan
             catch (ArgumentNullException ae)
             {
                 Console.WriteLine("ArgumentNullException: " + ae.Source + ", msg = " + ae.Message);
+                return IP;
             }
             catch (FormatException fe)
             {
                 Console.WriteLine("FormatException: " + fe.Source + ", msg = " + fe.Message);
+                return IP;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception: " + e.Source + ", msg = " + e.Message);
+                return IP;
             }
 
             return address;
         }
 
-        private PhysicalAddress ParseMacAddress(string mac)
+        public PhysicalAddress ParseMacAddress(string mac)
         {
             PhysicalAddress address = null;
 
@@ -97,14 +98,17 @@ namespace WakeOnLan
             catch (ArgumentNullException ae)
             {
                 Console.WriteLine("ArgumentNullException: " + ae.Source + ", msg = " + ae.Message);
+                return macAddress;
             }
             catch (FormatException fe)
             {
                 Console.WriteLine("FormatException: " + fe.Source + ", msg = " + fe.Message);
+                return macAddress;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception: " + e.Source + ", msg = " + e.Message);
+                return macAddress;
             }
 
             return address;

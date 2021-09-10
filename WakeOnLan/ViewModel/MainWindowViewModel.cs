@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace WakeOnLan.ViewModel
 {
@@ -50,6 +51,17 @@ namespace WakeOnLan.ViewModel
                 records = value;
                 OnPropertyChanged(nameof(Records));
             }
+        }
+
+        public void UpdatePCInfoMap()
+        {
+            // make a snapshot
+            ComputerInfo[] copy = new ComputerInfo[records.Count];
+            records.CopyTo(copy, 0);
+
+            Dictionary<string, ComputerInfo> temp = new Dictionary<string, ComputerInfo>();
+
+            pcInfoMap = copy.Select(x=>new KeyValuePair<string, ComputerInfo>(x.id, x)).ToDictionary(y => y.Key, y => y.Value);
         }
 
         // Bind Select PC info
@@ -109,6 +121,7 @@ namespace WakeOnLan.ViewModel
             {
                 selectedIP = value;
                 OnPropertyChanged(nameof(SelectedIP));
+                SelectedPCInfo.IP = SelectedPCInfo.ParseIp(value);
             }
         }
 
@@ -120,6 +133,7 @@ namespace WakeOnLan.ViewModel
             {
                 selectedMac = value;
                 OnPropertyChanged(nameof(SelectedMac));
+                SelectedPCInfo.macAddress = SelectedPCInfo.ParseMacAddress(value);
             }
         }
 
@@ -131,6 +145,7 @@ namespace WakeOnLan.ViewModel
             {
                 selectedId = value;
                 OnPropertyChanged(nameof(SelectedId));
+                SelectedPCInfo.id = value;
             }
         }
 
@@ -152,6 +167,7 @@ namespace WakeOnLan.ViewModel
             {
                 selectedDescription = value;
                 OnPropertyChanged(nameof(SelectedDescription));
+                SelectedPCInfo.description = value;
             }
         }
         private string selectedlastChecked = "NA";
