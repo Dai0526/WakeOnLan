@@ -104,12 +104,20 @@ namespace WakeOnLan
 
         private void WakeAllButton_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach (var pc in mainWindowViewModel.PCInfoMap)
+            {
+                Task.Run(() => CheckSinglePC(pc.Value));
+            }
         }
 
         private void WakeButton_Click(object sender, RoutedEventArgs e)
         {
+            Task.Run(() => WakeSinglePC(mainWindowViewModel.SelectedPCInfo));
+        }
 
+        private void WakeSinglePC(ComputerInfo info)
+        {
+            m_wake.Wake(info);
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

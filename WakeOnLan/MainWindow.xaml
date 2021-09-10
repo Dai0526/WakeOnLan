@@ -104,10 +104,10 @@
                         </TextBlock>
 
                         <Label x:Name="SelectedIPLabel" Content="IP:" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="0,78,0,0" VerticalAlignment="Top" FontSize="16" Width="116"/>
-                        <TextBox x:Name="SelectedIPTB" Text="{Binding Path=SelectedIP, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="139,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" FontSize="16" TextChanged="SelectedIPTB_TextChanged"/>
+                        <TextBox x:Name="SelectedIPTB" Text="{Binding Path=SelectedIP, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="139,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" FontSize="16"/>
 
                         <Label x:Name="SelectedMACLabel" Content="MAC:" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="0,112,0,0" VerticalAlignment="Top" FontSize="16" Width="116"/>
-                        <TextBox x:Name="SelectedMACTB" Text="{Binding Path=SelectedMac, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="139,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" FontSize="16" TextChanged="SelectedMACTB_TextChanged"/>
+                        <TextBox x:Name="SelectedMACTB" Text="{Binding Path=SelectedMac, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="139,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" FontSize="16"/>
 
                         <Label x:Name="SelectedLastCheckedLabel" Content="Last Checked: " HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="0,146,0,0" VerticalAlignment="Top" FontSize="15" Width="116"/>
                         <TextBox x:Name="SelectedLastCheckTB" Text="{Binding Path=SelectedlastChecked, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="139,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" FontSize="16" IsReadOnly="True"/>
@@ -118,9 +118,8 @@
                     </Grid>
 
                     <Grid Name="SelectedItemOperationGrid"  Grid.Row="1">
-                        <Button x:Name="CheckButton" Content="Check" HorizontalAlignment="Left" Margin="136,10,0,0" VerticalAlignment="Top" Width="65" FontSize="18" Click="CheckButton_Click"/>
+                        <Button x:Name="CheckButton" Content="Check" HorizontalAlignment="Left" Margin="210,10,0,0" VerticalAlignment="Top" Width="65" FontSize="18" Click="CheckButton_Click"/>
                         <Button x:Name="WakeButton" Content="Wake" HorizontalAlignment="Left" Margin="38,10,0,0" VerticalAlignment="Top" Width="72" FontSize="18" Click="WakeButton_Click"/>
-                        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="226,10,0,0" VerticalAlignment="Top" Width="72" FontSize="18" Click="SaveButton_Click"/>
                     </Grid>
                 </Grid>
             </Grid>

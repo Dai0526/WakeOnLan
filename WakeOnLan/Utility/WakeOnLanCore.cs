@@ -13,26 +13,51 @@ namespace WakeOnLan.Utility
     {
 
         private const UInt16 Port = 9;
+        private readonly IPAddress braodcastIp = IPAddress.Broadcast;
+
         private UdpClient m_client = null;
 
         public WakeOnLanCore()
         {
-
-        }
-
-        public void Wake(string mac, string ip = "")
-        {
-            // TODO
+            m_client = new UdpClient();
         }
 
         public void Wake(PhysicalAddress mac, IPAddress ip = null)
         {
-            // TODO
+            if (ip != null && ip != IPAddress.Loopback)
+            {
+                SendP2P(mac, ip);
+            }
+
+            SendBroadcast(mac);
         }
 
         public void Wake(ComputerInfo info)
         {
-            // TODO
+            if(info.IP != null && info.IP != IPAddress.Loopback){
+                SendP2P(info.macAddress, info.IP);
+            }
+            // send both methods - sometime ip will change do to DNS changes, thus double check
+            SendBroadcast(info.macAddress);
+        }
+
+        private bool SendBroadcast(PhysicalAddress mac)
+        {
+            var magic = MakeMagicPacket(mac);
+            m_client.Send(magic, magic.Length, new IPEndPoint(braodcastIp, Port));
+            return true;
+        }
+
+        private bool SendP2P(PhysicalAddress mac, IPAddress ip)
+        {
+            var magic = MakeMagicPacket(mac);
+            m_client.Send(magic, magic.Length, new IPEndPoint(ip, Port));
+            return true;
+        }
+
+        private byte[] MakeMagicPacket(PhysicalAddress mac)
+        {
+            return Enumerable.Repeat(Byte.MaxValue, 6).Concat(Enumerable.Repeat(mac.GetAddressBytes(), 16).SelectMany(x => x)).ToArray();
         }
 
         public bool PingTarget(ComputerInfo info)
